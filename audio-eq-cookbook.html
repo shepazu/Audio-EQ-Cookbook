@@ -21,7 +21,7 @@
       display: inline; !
     }
     
-    .label {
+    .label, mtext, .mtext {
       font-style: italic;
       color: gray;
     }
@@ -73,8 +73,7 @@
     bandwidth is compressed when mapped from analog to digital using the BLT).</p>
     <p>First, given a biquad transfer function defined as:</p>
 
-    <p class="label" id="equation-1">equation 1</p>
-    <math title="Equation 1">
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
       <mstyle displaystyle="true">
         <mi>H</mi>
         <mrow>
@@ -82,17 +81,19 @@
           <mi>z</mi>
           <mo>)</mo>
         </mrow>
-
         <mo>=</mo>
-
         <mfrac>
           <mrow>
-            <mi>b</mi>
-            <mn>0</mn>
+            <msub>
+              <mi>b</mi>
+              <mn>0</mn>
+            </msub>
             <mo>+</mo>
-            <mi>b</mi>
-            <mn>1</mn>
-            <mo>&sdot;</mo>
+            <msub>
+              <mi>b</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>&#x22C5;</mo>
             <msup>
               <mi>z</mi>
               <mrow>
@@ -101,9 +102,11 @@
               </mrow>
             </msup>
             <mo>+</mo>
-            <mi>b</mi>
-            <mn>2</mn>
-            <mo>&sdot;</mo>
+            <msub>
+              <mi>b</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>&#x22C5;</mo>
             <msup>
               <mi>z</mi>
               <mrow>
@@ -113,12 +116,16 @@
             </msup>
           </mrow>
           <mrow>
-            <mi>a</mi>
-            <mn>0</mn>
+            <msub>
+              <mi>a</mi>
+              <mn>0</mn>
+            </msub>
             <mo>+</mo>
-            <mi>a</mi>
-            <mn>1</mn>
-            <mo>&sdot;</mo>
+            <msub>
+              <mi>a</mi>
+              <mn>1</mn>
+            </msub>
+            <mo>&#x22C5;</mo>
             <msup>
               <mi>z</mi>
               <mrow>
@@ -127,9 +134,11 @@
               </mrow>
             </msup>
             <mo>+</mo>
-            <mi>a</mi>
-            <mn>2</mn>
-            <mo>&sdot;</mo>
+            <msub>
+              <mi>a</mi>
+              <mn>2</mn>
+            </msub>
+            <mo>&#x22C5;</mo>
             <msup>
               <mi>z</mi>
               <mrow>
@@ -139,15 +148,23 @@
             </msup>
           </mrow>
         </mfrac>
+        <mo>&#xA0;</mo>
+        <mo>&#xA0;</mo>
+        <mrow>
+          <mtext>(equation 1)</mtext>
+        </mrow>
       </mstyle>
     </math>
+
     
     <p>This shows 6 coefficients instead of 5 so, depending on your architecture,
-    you will likely normalize a0 to be 1 and perhaps also b0 to 1 (and collect
-    that into an overall gain coefficient).  Then your transfer function would
+    you will likely normalize 
+    <math title="a_0 "><mstyle displaystyle="true"><msub><mi>a</mi><mn>0</mn></msub></mstyle></math>
+    to be 1 and perhaps also 
+    <math title="b_0 "><mstyle displaystyle="true"><msub><mi>b</mi><mn>0</mn></msub></mstyle></math>
+    to 1 (and collect that into an overall gain coefficient).  Then your transfer function would
     look like:</p>
     
-    <p class="label" id="equation-2">equation 2</p>
     <math xmlns="http://www.w3.org/1998/Math/MathML">
       <mstyle displaystyle="true">
         <mi>H</mi>
@@ -273,7 +290,7 @@
         <mo>&#xA0;</mo>
         <mo>&#xA0;</mo>
         <mrow>
-          <mtext>(Equation 2)</mtext>
+          <mtext>(equation 2)</mtext>
         </mrow>
       </mstyle>
     </math>
@@ -397,7 +414,7 @@
           </mrow>
         </mfrac>
         <mrow>
-          <mtext>(Equation 3)</mtext>
+          <mtext>(equation 3)</mtext>
         </mrow>
       </mstyle>
     </math>
