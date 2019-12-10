@@ -88,23 +88,18 @@
     
     <p>This shows 6 coefficients instead of 5 so, depending on your architecture,
     you will likely normalize 
-        $$
-        \begin{equation*}
+        \(
         a_0
-        \end{equation*}
-        $$
+	\)
     to be 1 and perhaps also 
-        $$
-        \begin{equation*}
-        b_0
-        \end{equation*}
-        $$
+        \(b_0\)
     to 1 (and collect that into an overall gain coefficient).  Then your transfer function would
     look like:</p>
     
       $$
       \begin{equation}
-        H(z) = \frac{\left(\frac{b_0}{a_0}\right) + \left(\frac{b_1}{a_0}\right)z^{-1}+\left(\frac{b_2}{a_0}\right)z^{-2}}{1 + \left(\frac{a_1}{a_0}\right)z^{-1}+\left(\frac{a_2}{a_0}\right)z^{-2}}
+        H(z) = \frac{\left(\displaystyle\frac{b_0}{a_0}\right) + \left(\displaystyle\frac{b_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{b_2}{a_0}\right)z^{-2}}{1 + \left(\displaystyle\frac{a_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{a_2}{a_0}\right)z^{-2}}
+        \label{direct-form-1}
       \end{equation}
       $$
  
@@ -112,10 +107,10 @@
 
       $$
       \begin{equation}
-        H(z) = \left(\frac{b_0}{a_0}\right) \frac{1 + \left(\frac{b_1}{b_0}\right)z^{-1}+\left(\frac{b_2}{b_0}\right)z^{-2}}{1 + \left(\frac{a_1}{a_0}\right)z^{-1}+\left(\frac{a_2}{a_0}\right)z^{-2}}
+        H(z) = \left(\frac{b_0}{a_0}\right) \frac{1 + \left(\displaystyle\frac{b_1}{b_0}\right)z^{-1}+\left(\displaystyle\frac{b_2}{b_0}\right)z^{-2}}{1 + \left(\displaystyle\frac{a_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{a_2}{a_0}\right)z^{-2}}
       \end{equation}
       $$
-    <p>The most straight forward implementation would be the "Direct Form 1" (equation 2):</p>
+    <p>The most straight forward implementation would be the "Direct Form 1" (\(eq. \ref{direct-form-1}\)):</p>
       $$
       \begin{align}
       y[n] = \left(\frac{b_0}{a_0}\right)x[n] & +
@@ -172,8 +167,8 @@
       <li>
           $$
             \begin{align*}
-              A &= \sqrt{10^{\frac{\mathrm{dBgain}}{20}}} & \\
-                & = 10^{\frac{\mathrm{dBgain}}{40}} & \textrm{(for peaking and shelving EQ filters only)}
+              A &= \sqrt{10^{\mathrm{dBgain}/20}} & \\
+                & = 10^{\mathrm{dBgain}/40} & \textrm{(for peaking and shelving EQ filters only)}
             \end{align*}
           $$
       </li>
@@ -245,7 +240,7 @@
       <dt>LPF</dt>
       <dd>
           $$
-            H(s) = \frac{1}{s^2 + \frac{s}{Q} + 1}
+            H(s) = \frac{1}{s^2 + \displaystyle\frac{s}{Q} + 1}
           $$
           $$
             \begin{align*}
@@ -263,7 +258,7 @@
       <dt>HPF</dt>
       <dd>
           $$
-            H(s) = \frac{s^2}{s^2 + \frac{s}{Q} + 1}
+            H(s) = \frac{s^2}{s^2 + \displaystyle\frac{s}{Q} + 1}
           $$
           $$
             \begin{align*}
@@ -281,7 +276,7 @@
       <dt>BPF <br>(constant skirt gain, <br>peak gain = Q)</dt>
       <dd>
           $$
-            H(s) = \frac{s}{s^2 + \frac{s}{Q} + 1}
+            H(s) = \frac{s}{s^2 + \displaystyle\frac{s}{Q} + 1}
           $$
           $$
             \begin{align*}
@@ -299,7 +294,7 @@
       <dt>BPF <br>(constant 0 dB peak gain)</dt>
       <dd>
           $$
-            H(s) = \frac{\frac{s}{Q}}{s^2 + \frac{s}{Q} + 1}
+            H(s) = \frac{\displaystyle\frac{s}{Q}}{s^2 + \displaystyle\frac{s}{Q} + 1}
           $$
           $$
             \begin{align*}
@@ -317,7 +312,7 @@
       <dt>notch</dt>
       <dd>
           $$
-            H(s) = \frac{s^2 + 1}{s^2 + \frac{s}{Q} + 1}
+            H(s) = \frac{s^2 + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
           $$
           $$
             \begin{align*}
