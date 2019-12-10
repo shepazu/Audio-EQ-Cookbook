@@ -3,8 +3,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>Cookbook formulae for audio EQ biquad filter coefficients</title>
+      <script>
+        MathJax = {
+          tex: {
+            tags: 'ams'
+          }
+        };
+      </script>
 	<script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML">
+    src="http://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
   <style type="text/css" media="screen">
     body {
@@ -73,501 +80,50 @@
     bandwidth is compressed when mapped from analog to digital using the BLT).</p>
     <p>First, given a biquad transfer function defined as:</p>
 
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-        <mi>H</mi>
-        <mrow>
-          <mo>(</mo>
-          <mi>z</mi>
-          <mo>)</mo>
-        </mrow>
-        <mo>=</mo>
-        <mfrac>
-          <mrow>
-            <msub>
-              <mi>b</mi>
-              <mn>0</mn>
-            </msub>
-            <mo>+</mo>
-            <msub>
-              <mi>b</mi>
-              <mn>1</mn>
-            </msub>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>1</mn>
-              </mrow>
-            </msup>
-            <mo>+</mo>
-            <msub>
-              <mi>b</mi>
-              <mn>2</mn>
-            </msub>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>2</mn>
-              </mrow>
-            </msup>
-          </mrow>
-          <mrow>
-            <msub>
-              <mi>a</mi>
-              <mn>0</mn>
-            </msub>
-            <mo>+</mo>
-            <msub>
-              <mi>a</mi>
-              <mn>1</mn>
-            </msub>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>1</mn>
-              </mrow>
-            </msup>
-            <mo>+</mo>
-            <msub>
-              <mi>a</mi>
-              <mn>2</mn>
-            </msub>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>2</mn>
-              </mrow>
-            </msup>
-          </mrow>
-        </mfrac>
-        <mo>&#xA0;</mo>
-        <mo>&#xA0;</mo>
-        <mrow>
-          <mtext>(equation 1)</mtext>
-        </mrow>
-      
-    </math>
-
+    $$
+      \begin{equation}
+        H(z) = \frac{b_0 + b_1z^{-1}+b_2z^{-2}}{a_0 + a_1z^{-1}+a_2z^{-2}}
+      \end{equation}
+    $$
     
     <p>This shows 6 coefficients instead of 5 so, depending on your architecture,
     you will likely normalize 
-    <math title="a_0 " display="block"><msub><mi>a</mi><mn>0</mn></msub></math>
+        $$
+        \begin{equation*}
+        a_0
+        \end{equation*}
+        $$
     to be 1 and perhaps also 
-    <math title="b_0 " display="block"><msub><mi>b</mi><mn>0</mn></msub></math>
+        $$
+        \begin{equation*}
+        b_0
+        \end{equation*}
+        $$
     to 1 (and collect that into an overall gain coefficient).  Then your transfer function would
     look like:</p>
     
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-        <mi>H</mi>
-        <mrow>
-          <mo>(</mo>
-          <mi>z</mi>
-          <mo>)</mo>
-        </mrow>
-        <mo>=</mo>
-        <mfrac>
-          <mrow>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <msub>
-                  <mi>b</mi>
-                  <mn>0</mn>
-                </msub>
-                <msub>
-                  <mi>a</mi>
-                  <mn>0</mn>
-                </msub>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <msub>
-                  <mi>b</mi>
-                  <mn>1</mn>
-                </msub>
-                <msub>
-                  <mi>a</mi>
-                  <mn>0</mn>
-                </msub>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>1</mn>
-              </mrow>
-            </msup>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <msub>
-                  <mi>b</mi>
-                  <mn>2</mn>
-                </msub>
-                <msub>
-                  <mi>a</mi>
-                  <mn>0</mn>
-                </msub>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>2</mn>
-              </mrow>
-            </msup>
-          </mrow>
-          <mrow>
-            <mn>1</mn>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <msub>
-                  <mi>a</mi>
-                  <mn>1</mn>
-                </msub>
-                <msub>
-                  <mi>a</mi>
-                  <mn>0</mn>
-                </msub>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>1</mn>
-              </mrow>
-            </msup>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <msub>
-                  <mi>a</mi>
-                  <mn>2</mn>
-                </msub>
-                <msub>
-                  <mi>a</mi>
-                  <mn>0</mn>
-                </msub>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>2</mn>
-              </mrow>
-            </msup>
-          </mrow>
-        </mfrac>
-        <mo>&#xA0;</mo>
-        <mo>&#xA0;</mo>
-        <mrow>
-          <mtext>(equation 2)</mtext>
-        </mrow>
-      
-    </math>
+      $$
+      \begin{equation}
+        H(z) = \frac{\left(\frac{b_0}{a_0}\right) + \left(\frac{b_1}{a_0}\right)z^{-1}+\left(\frac{b_2}{a_0}\right)z^{-2}}{1 + \left(\frac{a_1}{a_0}\right)z^{-1}+\left(\frac{a_2}{a_0}\right)z^{-2}}
+      \end{equation}
+      $$
  
     <p>or:</p>
 
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-        <mi>H</mi>
-        <mrow>
-          <mo>(</mo>
-          <mi>z</mi>
-          <mo>)</mo>
-        </mrow>
-        <mo>=</mo>
-        <mrow>
-          <mo>(</mo>
-          <mfrac>
-            <msub>
-              <mi>b</mi>
-              <mn>0</mn>
-            </msub>
-            <msub>
-              <mi>a</mi>
-              <mn>0</mn>
-            </msub>
-          </mfrac>
-          <mo>)</mo>
-        </mrow>
-        <mo>&#x22C5;</mo>
-        <mfrac>
-          <mrow>
-            <mn>1</mn>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <msub>
-                  <mi>b</mi>
-                  <mn>1</mn>
-                </msub>
-                <msub>
-                  <mi>b</mi>
-                  <mn>0</mn>
-                </msub>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>1</mn>
-              </mrow>
-            </msup>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mfrac>
-                <msub>
-                  <mi>b</mi>
-                  <mn>2</mn>
-                </msub>
-                <msub>
-                  <mi>b</mi>
-                  <mn>0</mn>
-                </msub>
-              </mfrac>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>2</mn>
-              </mrow>
-            </msup>
-          </mrow>
-          <mrow>
-            <mn>1</mn>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mi>a</mi>
-              <mfrac>
-                <mn>1</mn>
-                <mi>a</mi>
-              </mfrac>
-              <mn>0</mn>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>1</mn>
-              </mrow>
-            </msup>
-            <mo>+</mo>
-            <mrow>
-              <mo>(</mo>
-              <mi>a</mi>
-              <mfrac>
-                <mn>2</mn>
-                <mi>a</mi>
-              </mfrac>
-              <mn>0</mn>
-              <mo>)</mo>
-            </mrow>
-            <mo>&#x22C5;</mo>
-            <msup>
-              <mi>z</mi>
-              <mrow>
-                <mo>-</mo>
-                <mn>2</mn>
-              </mrow>
-            </msup>
-          </mrow>
-        </mfrac>
-        <mrow>
-          <mtext>(equation 3)</mtext>
-        </mrow>
-      
-    </math>
-    
+      $$
+      \begin{equation}
+        H(z) = \left(\frac{b_0}{a_0}\right) \frac{1 + \left(\frac{b_1}{b_0}\right)z^{-1}+\left(\frac{b_2}{b_0}\right)z^{-2}}{1 + \left(\frac{a_1}{a_0}\right)z^{-1}+\left(\frac{a_2}{a_0}\right)z^{-2}}
+      \end{equation}
+      $$
     <p>The most straight forward implementation would be the "Direct Form 1" (equation 2):</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-        <mrow>
-          <mtable columnalign="left">
-            <mtr>
-              <mtd>
-                <mi>y</mi>
-                <mrow>
-                  <mo>[</mo>
-                  <mi>n</mi>
-                  <mo>]</mo>
-                </mrow>
-              </mtd>
-              <mtd>
-                <mo>=</mo>
-                <mrow>
-                  <mo>(</mo>
-                  <mfrac>
-                    <msub>
-                      <mi>b</mi>
-                      <mn>0</mn>
-                    </msub>
-                    <msub>
-                      <mi>a</mi>
-                      <mn>0</mn>
-                    </msub>
-                  </mfrac>
-                  <mo>)</mo>
-                </mrow>
-                <mo>&#x22C5;</mo>
-                <mi>x</mi>
-                <mrow>
-                  <mo>[</mo>
-                  <mi>n</mi>
-                  <mo>]</mo>
-                </mrow>
-              </mtd>
-              <mtd>
-                <mo>+</mo>
-                <mrow>
-                  <mo>(</mo>
-                  <mfrac>
-                    <msub>
-                      <mi>b</mi>
-                      <mn>1</mn>
-                    </msub>
-                    <msub>
-                      <mi>a</mi>
-                      <mn>0</mn>
-                    </msub>
-                  </mfrac>
-                  <mo>)</mo>
-                </mrow>
-                <mo>&#x22C5;</mo>
-                <mi>x</mi>
-                <mrow>
-                  <mo>[</mo>
-                  <mi>n</mi>
-                  <mo>-</mo>
-                  <mn>1</mn>
-                  <mo>]</mo>
-                </mrow>
-                <mo>+</mo>
-                <mrow>
-                  <mo>(</mo>
-                  <mfrac>
-                    <msub>
-                      <mi>b</mi>
-                      <mn>2</mn>
-                    </msub>
-                    <msub>
-                      <mi>a</mi>
-                      <mn>0</mn>
-                    </msub>
-                  </mfrac>
-                  <mo>)</mo>
-                </mrow>
-                <mo>&#x22C5;</mo>
-                <mi>x</mi>
-                <mrow>
-                  <mo>[</mo>
-                  <mi>n</mi>
-                  <mo>-</mo>
-                  <mn>2</mn>
-                  <mo>]</mo>
-                </mrow>
-              </mtd>
-              <mtd />
-            </mtr>
-            <mtr>
-              <mtd />
-              <mtd />
-              <mtd>
-                <mo>-</mo>
-                <mrow>
-                  <mo>(</mo>
-                  <mfrac>
-                    <msub>
-                      <mi>a</mi>
-                      <mn>1</mn>
-                    </msub>
-                    <msub>
-                      <mi>a</mi>
-                      <mn>0</mn>
-                    </msub>
-                  </mfrac>
-                  <mo>)</mo>
-                </mrow>
-                <mo>&#x22C5;</mo>
-                <mi>y</mi>
-                <mrow>
-                  <mo>[</mo>
-                  <mi>n</mi>
-                  <mo>-</mo>
-                  <mn>1</mn>
-                  <mo>]</mo>
-                </mrow>
-                <mo>-</mo>
-                <mrow>
-                  <mo>(</mo>
-                  <mfrac>
-                    <msub>
-                      <mi>a</mi>
-                      <mn>2</mn>
-                    </msub>
-                    <msub>
-                      <mi>a</mi>
-                      <mn>0</mn>
-                    </msub>
-                  </mfrac>
-                  <mo>)</mo>
-                </mrow>
-                <mo>&#x22C5;</mo>
-                <mi>y</mi>
-                <mrow>
-                  <mo>[</mo>
-                  <mi>n</mi>
-                  <mo>-</mo>
-                  <mn>2</mn>
-                  <mo>]</mo>
-                </mrow>
-              </mtd>
-              <mtd>
-                <mrow>
-                  <mtext>(equation 4)</mtext>
-                </mrow>
-              </mtd>
-            </mtr>
-          </mtable>
-        </mrow>
-      
-    </math>
+      $$
+      \begin{align}
+      y[n] = \left(\frac{b_0}{a_0}\right)x[n] & +
+      \left(\frac{b_1}{a_0}\right)x[n-1] + \left(\frac{b_2}{a_0}\right)x[n-2]
+      \nonumber \\
+      &-\left(\frac{a_1}{a_0}\right)y[n-1] - \left(\frac{a_2}{a_0}\right)y[n-2]
+      \end{align}
+      $$
     
     <p>This is probably both the best and the easiest method to implement in the
     56K and other fixed-point or floating-point architectures with a double
@@ -576,32 +132,32 @@
     <p>Begin with these user defined parameters:</p>
     
     <dl>      
-      <dt><math title="Fs" display="block"><mrow><msub><mi>F</mi><mn>s</mn></msub></mrow></math></dt>
+      <dt>\(F_s\)</dt>
       <dd>the sampling frequency</dd>
 
-      <dt><math title="f0 " display="block"><mrow><msub><mi>f</mi><mn>0</mn></msub></mrow></math></dt>
+      <dt>\(f_0\)</dt>
       <dd>Center Frequency or Corner Frequency, or shelf midpoint frequency, 
           depending on which filter type.  The "significant frequency".
           "wherever it's happenin', man."</dd>
       
-      <dt><math title="dBgain" display="block"><mi>dBgain</mi></math></dt>
+      <dt>\(\mathrm{dBgain}\)</dt>
       <dd>used only for peaking and shelving filters</dd>
       
-      <dt><math title="Q" display="block"><mi>Q</mi></math> or <math title="BW" display="block"><mi>BW</mi></math> or <math title="S" display="block"><mi>S</mi></math></dt>
+      <dt>\(Q\) or \(\mathrm{BW}\) or \(S\)</dt>
       <dd>
         <dl>
-          <dt><math title="Q" display="block"><mi>Q</mi></math></dt>
+          <dt>\(Q\)</dt>
           <dd>the EE kind of definition, except for peakingEQ in which A*Q is
               the classic EE Q.  That adjustment in definition was made so that
               a boost of N dB followed by a cut of N dB for identical Q and
               f0/Fs results in a precisely flat unity gain filter or "wire".</dd>
 
-          <dt><math title="BW" display="block"><mi>BW</mi></math></dt>
+          <dt>\(\mathrm{BW}\)</dt>
           <dd>the bandwidth in octaves (between -3 dB frequencies for BPF
               and notch or between midpoint (dBgain/2) gain frequencies for
               peaking EQ)</dd>
 
-          <dt><math title="S" display="block"><mi>S</mi></math></dt>
+          <dt>\(S\)</dt>
           <dd>a "shelf slope" parameter (for shelving EQ only).  When S = 1,
               the shelf slope is as steep as it can be and remain monotonically
               increasing or decreasing gain with frequency.  The shelf slope, in
@@ -614,239 +170,40 @@
     <p>Then compute a few intermediate variables:</p>
     <ol>
       <li>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <mrow>
-            <mtable columnalign="left">
-              <mtr>
-                <mtd>
-                  <mi>A</mi>
-                </mtd>
-                <mtd>
-                  <mo>=</mo>
-                  <msqrt>
-                    <mrow>
-                      <msup>
-                        <mn>10</mn>
-                        <mrow>
-                          <mfrac>
-                            <mo>dBgain</mo>
-                            <mn>20</mn>
-                          </mfrac>
-                        </mrow>
-                      </msup>
-                    </mrow>
-                  </msqrt>
-                </mtd>
-                <mtd />
-              </mtr>
-              <mtr>
-                <mtd />
-                <mtd>
-                  <mo>=</mo>
-                  <msup>
-                    <mn>10</mn>
-                    <mrow>
-                      <mfrac>
-                        <mo>dBgain</mo>
-                        <mn>40</mn>
-                      </mfrac>
-                    </mrow>
-                  </msup>
-                </mtd>
-                <mtd>
-                  <mrow>
-                    <mtext>(for peaking and shelving EQ filters only)</mtext>
-                  </mrow>
-                </mtd>
-              </mtr>
-            </mtable>
-          </mrow>
-        </math>        
+          $$
+            \begin{align*}
+              A &= \sqrt{10^{\frac{\mathrm{dBgain}}{20}}} & \\
+                & = 10^{\frac{\mathrm{dBgain}}{40}} & \textrm{(for peaking and shelving EQ filters only)}
+            \end{align*}
+          $$
       </li>
       
       <li>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <msub>
-            <mi>ω</mi>
-            <mn>0</mn>
-          </msub>
-          <mo>=</mo>
-          <mn>2</mn>
-          <mo>&#x22C5;</mo>
-          <mi>&#x3C0;</mi>
-          <mo>&#x22C5;</mo>
-          <mfrac>
-            <msub>
-              <mi>f</mi>
-              <mn>0</mn>
-            </msub>
-            <msub>
-              <mi>F</mi>
-              <mi>s</mi>
-            </msub>
-          </mfrac>      
-        </math>
+          $$
+          \omega_0 = 2 \pi \frac{f_0}{F_s}
+          $$
       </li>
       
       <li>
-        <math title="cos(ω_0) " display="block"><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></math>
-        <math title="sin(ω_0) " display="block"><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></math>
-        
+          $$
+            \begin{align*}
+              & \cos \omega_0 \\
+              & \sin \omega_0
+            \end{align*}
+          $$
       </li>
       
       <li>
-        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-          <mrow>
-            <mtable columnalign="left">
-              <mtr>
-                <mtd>
-                  <mi>&#x3B1;</mi>
-                </mtd>
-                <mtd>
-                  <mo>=</mo>
-                  <mfrac>
-                    <mrow>
-                      <mi>sin</mi>
-                      <mrow>
-                        <mo>(</mo>
-                        <msub>
-                          <mi>ω</mi>
-                          <mn>0</mn>
-                        </msub>
-                        <mo>)</mo>
-                      </mrow>
-                    </mrow>
-                    <mrow>
-                      <mn>2</mn>
-                      <mo>&#x22C5;</mo>
-                      <mi>Q</mi>
-                    </mrow>
-                  </mfrac>
-                </mtd>
-                <mtd>
-                  <mrow>
-                    <mtext>(case: Q)</mtext>
-                  </mrow>
-                </mtd>
-              </mtr>
-              <mtr>
-                <mtd />
-                <mtd>
-                  <mo>=</mo>
-                  <mrow>
-                    <mi>sin</mi>
-                    <mrow>
-                      <mo>(</mo>
-                      <msub>
-                        <mi>ω</mi>
-                        <mn>0</mn>
-                      </msub>
-                      <mo>)</mo>
-                    </mrow>
-                  </mrow>
-                  <mo>&#x22C5;</mo>
-                  <mrow>
-                    <mi>sinh</mi>
-                    <mrow>
-                      <mo>(</mo>
-                      <mfrac>
-                        <mrow>
-                          <mi>ln</mi>
-                          <mrow>
-                            <mo>(</mo>
-                            <mn>2</mn>
-                            <mo>)</mo>
-                          </mrow>
-                        </mrow>
-                        <mn>2</mn>
-                      </mfrac>
-                      <mo>&#x22C5;</mo>
-                      <mi>B</mi>
-                      <mi>W</mi>
-                      <mo>&#x22C5;</mo>
-                      <mfrac>
-                        <msub>
-                          <mi>ω</mi>
-                          <mn>0</mn>
-                        </msub>
-                        <mrow>
-                          <mi>sin</mi>
-                          <mrow>
-                            <mo>(</mo>
-                            <msub>
-                              <mi>ω</mi>
-                              <mn>0</mn>
-                            </msub>
-                            <mo>)</mo>
-                          </mrow>
-                        </mrow>
-                      </mfrac>
-                      <mo>)</mo>
-                    </mrow>
-                  </mrow>
-                </mtd>
-                <mtd>
-                  <mrow>
-                    <mtext>(case: BW)</mtext>
-                  </mrow>
-                </mtd>
-              </mtr>
-              <mtr>
-                <mtd />
-                <mtd>
-                  <mo>=</mo>
-                  <mfrac>
-                    <mrow>
-                      <mi>sin</mi>
-                      <mrow>
-                        <mo>(</mo>
-                        <msub>
-                          <mi>ω</mi>
-                          <mn>0</mn>
-                        </msub>
-                        <mo>)</mo>
-                      </mrow>
-                    </mrow>
-                    <mn>2</mn>
-                  </mfrac>
-                  <mo>&#x22C5;</mo>
-                  <msqrt>
-                    <mrow>
-                      <mrow>
-                        <mo>(</mo>
-                        <mi>A</mi>
-                        <mo>+</mo>
-                        <mfrac>
-                          <mn>1</mn>
-                          <mi>A</mi>
-                        </mfrac>
-                        <mo>)</mo>
-                      </mrow>
-                      <mo>&#x22C5;</mo>
-                      <mrow>
-                        <mo>(</mo>
-                        <mfrac>
-                          <mn>1</mn>
-                          <mi>S</mi>
-                        </mfrac>
-                        <mo>-</mo>
-                        <mn>1</mn>
-                        <mo>)</mo>
-                      </mrow>
-                      <mo>+</mo>
-                      <mn>2</mn>
-                    </mrow>
-                  </msqrt>
-                </mtd>
-                <mtd>
-                  <mrow>
-                    <mtext>(case: S)</mtext>
-                  </mrow>
-                </mtd>
-              </mtr>
-            </mtable>
-          </mrow>      
-        </math>
+          $$
+            \begin{align*}
+              \alpha &= \frac{\sin \omega_0}{2 Q} & \textrm{(case: Q)} \\
+                     &= \sin \omega_0 \, \sinh\left(\frac{\log 2}{2} \cdot
+                     \mathrm{BW} \cdot 
+                     \frac{\omega_0}{\sin \omega_0}\right) & \textrm{(case: BW)} \\
+                     &= \frac{\sin \omega_0}{2} \sqrt{\left(A +
+                     \frac{1}{A}\right) \left(\frac{1}{S} - 1\right) + 2} & \textrm{(case: S)}
+            \end{align*}
+          $$
       </li>
     </ol>
 
@@ -854,63 +211,31 @@
     <p>FYI: The relationship between bandwidth and Q is</p>
 
     <p class="label" id="">digital filter with BLT</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" title="1/Q = 2*sinh(ln(2)/2*BW*ω_0/sin(ω_0)) ">
-      <mfrac>
-        <mn>1</mn>
-        <mi>Q</mi>
-      </mfrac>
-      <mo>=</mo>
-      <mn>2</mn>
-      <mo>&#x22C5;</mo>
-      <mrow>
-        <mo>sinh</mo>
-        <mrow>
-          <mo>(</mo>
-          <mfrac>
-            <mrow>
-              <mo>ln</mo>
-              <mrow>
-                <mo>(</mo>
-                <mn>2</mn>
-                <mo>)</mo>
-              </mrow>
-            </mrow>
-            <mn>2</mn>
-          </mfrac>
-          <mo>&#x22C5;</mo>
-          <mi>BW</mi>
-          <mo>&#x22C5;</mo>
-          <mfrac>
-            <msub>
-              <mi>ω</mi>
-              <mn>0</mn>
-            </msub>
-            <mrow>
-              <mo>sin</mo>
-              <mrow>
-                <mo>(</mo>
-                <msub>
-                  <mi>ω</mi>
-                  <mn>0</mn>
-                </msub>
-                <mo>)</mo>
-              </mrow>
-            </mrow>
-          </mfrac>
-          <mo>)</mo>
-        </mrow>
-      </mrow>
-    </math>
-    
+      $$
+        \frac{1}{Q} = 2\sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW} \cdot
+        \frac{\omega_0}{\sin \omega_0}\right)
+      $$
+
     <p>or</p> 
     
     <p class="label" id="">analog filter prototype</p>
-    <math title="1/Q = 2*sinh(ln(2)/2*x) " display="block"><mfrac><mn>1</mn><mi>Q</mi></mfrac><mo>=</mo><mn>2</mn><mo>⋅</mo><mrow><mo>sinh</mo><mrow><mo>(</mo><mfrac><mrow><mo>ln</mo><mrow><mo>(</mo><mn>2</mn><mo>)</mo></mrow></mrow><mn>2</mn></mfrac><mo>⋅</mo><mi>BW</mi><mo>)</mo></mrow></mrow></math>
+      $$
+        \frac{1}{Q} = 2 \sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW}\right)
+      $$
+
         
     <p>The relationship between shelf slope and Q is</p>
-    <math title="1/Q = sqrt((A + 1/A)*(1/S - 1) + 2) " display="block"><mfrac><mn>1</mn><mi>Q</mi></mfrac><mo>=</mo><msqrt><mrow><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mfrac><mn>1</mn><mi>A</mi></mfrac><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mfrac><mn>1</mn><mi>S</mi></mfrac><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mn>2</mn></mrow></msqrt></math>
+      $$
+        \frac{1}{Q} = \sqrt{\left(A + \frac{1}{A}\right) \left(\frac{1}{S} -
+        1\right) + 2}
+      $$
 
-    <math title="2*sqrt(A)*alpha = sin(ω_0) * sqrt( (A^2 + 1)*(1/S - 1) + 2*A ) " display="block"><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi><mo>=</mo><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>⋅</mo><msqrt><mrow><mrow><mo>(</mo><msup><msub><mi>A</mi><mn>2</mn></msub></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mfrac><mn>1</mn><mi>S</mi></mfrac><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mn>2</mn><mo>⋅</mo><mi>A</mi></mrow></msqrt></math>
+
+      $$
+        2\sqrt{A}\,\alpha = (\sin \omega_0)\, \sqrt{\left(A^2 +
+        1\right)\left(\frac{1}{S}-1\right) + 2A}
+      $$
+
     <p>is a handy intermediate variable for shelving EQ filters.</p>
     
     <p>Finally, compute the coefficients for whichever filter type you want:</p>
@@ -919,47 +244,165 @@
     <dl>
       <dt>LPF</dt>
       <dd>
-        <math title="{:(H(s) = 1 / (s^2 + s/Q + 1)), (), (b0 = (1 - cos(ω_0))/2), (b1 = 1 - cos(ω_0)), (b2 = (1 - cos(ω_0))/2), (a0 = 1 + alpha), (a1 = -2*cos(ω_0)), (a2 = 1 - alpha):}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mn>1</mn><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mfrac><mi>s</mi><mi>Q</mi></mfrac><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><mn>1</mn><mo>-</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mrow><mn>2</mn></mfrac></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mfrac><mrow><mn>1</mn><mo>-</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mrow><mn>2</mn></mfrac></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = \frac{1}{s^2 + \frac{s}{Q} + 1}
+          $$
+          $$
+            \begin{align*}
+              b_0 &= \frac{1-\cos\omega_0}{2} \\
+              b_1 &= 1-\cos\omega_0 \\
+              b_2 &= \frac{1-\cos\omega_0}{2} \\
+              a_0 &= 1 + \alpha \\
+              a_1 &= -2\cos\omega_0 \\
+              a_2 &= 1 - \alpha
+            \end{align*}
+          $$
+
       </dd>
       
       <dt>HPF</dt>
       <dd>
-        <math title="{: (H(s) = s^2 / (s^2 + s/Q + 1)), (), (b0 = (1 + cos(ω_0))/2), (b1 = -(1 + cos(ω_0))), (b2 = (1 + cos(ω_0))/2), (a0 = 1 + alpha), (a1 = -2*cos(ω_0)), (a2 = 1 - alpha) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mfrac><msup><mi>s</mi><mn>2</mn></msup><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mfrac><mi>s</mi><mi>Q</mi></mfrac><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mrow><mn>2</mn></mfrac></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mrow><mn>2</mn></mfrac></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = \frac{s^2}{s^2 + \frac{s}{Q} + 1}
+          $$
+          $$
+            \begin{align*}
+              b_0 &=  \frac{1 + \cos \omega_0}{2} \\
+              b_1 &= -(1 + \cos \omega_0) \\
+              b_2 &=  \frac{1 + \cos \omega_0}{2} \\
+              a_0 &=   1 + \alpha \\
+              a_1 &=  -2\cos \omega_0 \\
+              a_2 &=   1 - \alpha
+            \end{align*}
+          $$
+
       </dd>
       
       <dt>BPF <br>(constant skirt gain, <br>peak gain = Q)</dt>
       <dd>
-        <math title="{: (H(s) = s / (s^2 + s/Q + 1)), (), (b0 = sin(ω_0)/2 = Q*alpha), (b1 = 0), (b2 = -sin(ω_0)/2 = -Q*alpha), (a0 = 1 + alpha), (a1 = -2*cos(ω_0)), (a2 = 1 - alpha) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mi>s</mi><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mfrac><mi>s</mi><mi>Q</mi></mfrac><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mn>2</mn></mfrac><mo>=</mo><mi>Q</mi><mo>⋅</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mo>-</mo><mfrac><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mn>2</mn></mfrac><mo>=</mo><mo>-</mo><mi>Q</mi><mo>⋅</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = \frac{s}{s^2 + \frac{s}{Q} + 1}
+          $$
+          $$
+            \begin{align*}
+              b0 &=   \frac{\sin\omega_0}{2}  =   Q \alpha \\
+              b1 &=   0 \\
+              b2 &=  -\frac{\sin\omega_0}{2}  =  -Q \alpha \\
+              a0 &=   1 + \alpha \\
+              a1 &=  -2\cos\omega_0 \\
+              a2 &=   1 - \alpha
+            \end{align*}
+          $$
+
       </dd>
       
       <dt>BPF <br>(constant 0 dB peak gain)</dt>
       <dd>
-        <math title="{: (H(s) = (s/Q) / (s^2 + s/Q + 1)), (), (b0 = alpha), (b1 = 0), (b2 = -alpha), (a0 = 1 + alpha), (a1 = -2*cos(ω_0)), (a2 = 1 - alpha) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mfrac><mi>s</mi><mi>Q</mi></mfrac></mrow><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mfrac><mi>s</mi><mi>Q</mi></mfrac><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mo>-</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = \frac{\frac{s}{Q}}{s^2 + \frac{s}{Q} + 1}
+          $$
+          $$
+            \begin{align*}
+              b_0 &=   \alpha \\
+              b_1 &=   0 \\
+              b_2 &=  -\alpha \\
+              a_0 &=   1 + \alpha \\
+              a_1 &=  -2\cos \omega_0 \\
+              a_2 &=   1 - \alpha
+            \end{align*}
+          $$
+
       </dd>
       
       <dt>notch</dt>
       <dd>
-        <math title="{: (H(s) = (s^2 + 1) / (s^2 + s/Q + 1)), (), (b0 = 1), (b1 = -2*cos(ω_0)), (b2 = 1), (a0 = 1 + alpha), (a1 = -2*cos(ω_0)), (a2 = 1 - alpha) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mfrac><mi>s</mi><mi>Q</mi></mfrac><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = \frac{s^2 + 1}{s^2 + \frac{s}{Q} + 1}
+          $$
+          $$
+            \begin{align*}
+              b_0 &=   1 \\
+              b_1 &=  -2\cos \omega_0 \\
+              b_2 &=   1 \\
+              a_0 &=   1 + \alpha \\
+              a_1 &=  -2\cos \omega_0 \\
+              a_2 &=   1 - \alpha
+            \end{align*}
+          $$
+
       </dd>
       
       <dt>APF</dt>
       <dd>
-        <math title="{: (H(s) = (s^2 - s/Q + 1) / (s^2 + s/Q + 1)), (), (b0 = 1 - alpha), (b1 = -2*cos(ω_0)), (b2 = 1 + alpha), (a0 = 1 + alpha), (a1 = -2*cos(ω_0)), (a2 = 1 - alpha) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>-</mo><mfrac><mi>s</mi><mi>Q</mi></mfrac><mo>+</mo><mn>1</mn></mrow><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mfrac><mi>s</mi><mi>Q</mi></mfrac><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = \frac{s^2 - \displaystyle\frac{s}{Q} + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
+          $$
+          $$
+            \begin{align*}
+              b_0 &=   1 - \alpha \\
+              b_1 &=  -2\cos\omega_0 \\
+              b_2 &=   1 + \alpha \\
+              a_0 &=   1 + \alpha \\
+              a_1 &=  -2\cos\omega_0 \\
+              a_2 &=   1 - \alpha
+            \end{align*}
+          $$
+
       </dd>
       
       <dt>peakingEQ</dt>
       <dd>
-        <math title="{: (H(s) = (s^2 + s*(A/Q) + 1) / (s^2 + s/(A*Q) + 1)), (), (b0 = 1 + alpha*A), (b1 = -2*cos(ω_0)), (b2 = 1 - alpha*A), (a0 = 1 + alpha/A), (a1 = -2*cos(ω_0)), (a2 = 1 - alpha/A) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mi>s</mi><mo>⋅</mo><mrow><mo>(</mo><mfrac><mi>A</mi><mi>Q</mi></mfrac><mo>)</mo></mrow><mo>+</mo><mn>1</mn></mrow><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mfrac><mi>s</mi><mrow><mi>A</mi><mo>⋅</mo><mi>Q</mi></mrow></mfrac><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mi>α</mi><mo>⋅</mo><mi>A</mi></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mi>α</mi><mo>⋅</mo><mi>A</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn><mo>+</mo><mfrac><mi>α</mi><mi>A</mi></mfrac></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mi>α</mi><mi>A</mi></mfrac></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = \frac{s^2 + s\displaystyle\frac{A}{Q} + 1}{s^2 + \displaystyle\frac{s}{AQ} + 1}
+          $$
+          $$
+            \begin{align*}
+              b_0 &=   1 + \alpha A \\
+              b_1 &=  -2\cos\omega_0 \\
+              b_2 &=   1 - \alpha A \\
+              a_0 &=   1 + \frac{\alpha}{A} \\
+              a_1 &=  -2\cos\omega_0 \\
+              a_2 &=   1 - \frac{\alpha}{A}
+            \end{align*}
+          $$
       </dd>
       
       <dt>lowShelf</dt>
       <dd>
-        <math title="{: (H(s) = A * (s^2 + (sqrt(A)/Q)*s + A)/(A*s^2 + (sqrt(A)/Q)*s + 1)), (), (b0 = A*( (A+1) - (A-1)*cos(ω_0) + 2*sqrt(A)*alpha )), (b1 = 2*A*( (A-1) - (A+1)*cos(ω_0) )), (b2 = A*( (A+1) - (A-1)*cos(ω_0) - 2*sqrt(A)*alpha )), (a0 = (A+1) + (A-1)*cos(ω_0) + 2*sqrt(A)*alpha), (a1 = -2*( (A-1) + (A+1)*cos(ω_0) )), (a2 = (A+1) + (A-1)*cos(ω_0) - 2*sqrt(A)*alpha) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mi>A</mi><mo>⋅</mo><mfrac><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mrow><mo>(</mo><mfrac><msqrt><mrow><mi>A</mi></mrow></msqrt><mi>Q</mi></mfrac><mo>)</mo></mrow><mo>⋅</mo><mi>s</mi><mo>+</mo><mi>A</mi></mrow><mrow><mi>A</mi><mo>⋅</mo><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mrow><mo>(</mo><mfrac><msqrt><mrow><mi>A</mi></mrow></msqrt><mi>Q</mi></mfrac><mo>)</mo></mrow><mo>⋅</mo><mi>s</mi><mo>+</mo><mn>1</mn></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mi>A</mi><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>-</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>+</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn><mo>⋅</mo><mi>A</mi><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>-</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mi>A</mi><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>-</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>-</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>+</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>-</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = A \frac{s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
+                          {A*s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + 1}
+          $$
+          $$
+            \begin{align*}
+              b_0 &=    A\left( (A+1) - (A-1)\cos\omega_0 + 2\sqrt{A}\, \alpha \right) \\
+              b_1 &=  2A\left( (A-1) - (A+1)\cos\omega_0                   \right) \\
+              b_2 &=    A\left( (A+1) - (A-1)\cos\omega_0 - 2\sqrt{A}\, \alpha \right) \\
+              a_0 &=        (A+1) + (A-1)\cos\omega_0 + 2\sqrt{A}\, \alpha \\
+              a_1 &=   -2\left( (A-1) + (A+1)\cos\omega_0                   \right) \\
+              a_2 &=        (A+1) + (A-1)\cos\omega_0 - 2\sqrt{A}\, \alpha
+            \end{align*}
+          $$
+
       </dd>
       
       <dt>highShelf</dt>
       <dd>
-        <math title="{: (H(s) = A * (A*s^2 + (sqrt(A)/Q)*s + 1)/(s^2 + (sqrt(A)/Q)*s + A)), (), (b0 = A*( (A+1) + (A-1)*cos(ω_0) + 2*sqrt(A)*alpha )), (b1 = -2*A*( (A-1) + (A+1)*cos(ω_0) )), (b2 = A*( (A+1) + (A-1)*cos(ω_0) - 2*sqrt(A)*alpha )), (a0 = (A+1) - (A-1)*cos(ω_0) + 2*sqrt(A)*alpha), (a1 = 2*( (A-1) - (A+1)*cos(ω_0) )), (a2 = (A+1) - (A-1)*cos(ω_0) - 2*sqrt(A)*alpha) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>H</mi><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow><mo>=</mo><mi>A</mi><mo>⋅</mo><mfrac><mrow><mi>A</mi><mo>⋅</mo><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mrow><mo>(</mo><mfrac><msqrt><mrow><mi>A</mi></mrow></msqrt><mi>Q</mi></mfrac><mo>)</mo></mrow><mo>⋅</mo><mi>s</mi><mo>+</mo><mn>1</mn></mrow><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>+</mo><mrow><mo>(</mo><mfrac><msqrt><mrow><mi>A</mi></mrow></msqrt><mi>Q</mi></mfrac><mo>)</mo></mrow><mo>⋅</mo><mi>s</mi><mo>+</mo><mi>A</mi></mrow></mfrac></mtd></mtr><mtr><mtd></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>0</mn></msub><mo>=</mo><mi>A</mi><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>+</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>1</mn></msub><mo>=</mo><mo>-</mo><mn>2</mn><mo>⋅</mo><mi>A</mi><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mi>A</mi><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>-</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>0</mn></msub><mo>=</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>-</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>+</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>1</mn></msub><mo>=</mo><mn>2</mn><mo>⋅</mo><mrow><mo>(</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>-</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>a</mi><mn>2</mn></msub><mo>=</mo><mrow><mo>(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>-</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>-</mo><mn>2</mn><mo>⋅</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>⋅</mo><mi>α</mi></mtd></mtr></mtable></mrow></math>
+          $$
+            H(s) = A \frac{As^2 + \displaystyle\frac{\sqrt{A}}{Q}s + 1}
+                   {s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
+          $$
+          $$
+            \begin{align*}
+              b_0 &=    A\left( (A+1) + (A-1)\cos\omega_0 + 2\sqrt{A}\alpha \right) \\
+              b_1 &= -2A\left( (A-1) + (A+1)\cos\omega_0                   \right) \\
+              b_2 &=    A\left( (A+1) + (A-1)\cos\omega_0 - 2\sqrt{A}\alpha \right) \\
+              a_0 &=        (A+1) - (A-1)\cos\omega_0 + 2\sqrt{A}\alpha \\
+              a_1 &=    2\left( (A-1) - (A+1)\cos\omega_0                   \right) \\
+              a_2 &=        (A+1) - (A-1)\cos\omega_0 - 2\sqrt{A}\alpha
+            \end{align*}
+          $$
+
       </dd>
       
     </dl>
@@ -967,31 +410,53 @@
     <p>FYI: The bilinear transform (with compensation for frequency warping) substitutes:</p>
 
     <p class="label" id="">(normalized)</p>
-    <math title="s = 1 / tan(ω_0/2) * 1 - z^-1 / 1 + z^-1" display="block"><mi>s</mi><mo>←</mo><mfrac><mn>1</mn><mrow><mo>tan</mo><mrow><mo>(</mo><mi>ω</mi><mfrac><mn>0</mn><mn>2</mn></mfrac><mo>)</mo></mrow></mrow></mfrac><mo>⋅</mo><mn>1</mn><mo>-</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mn>1</mn></mfrac><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup></math>
+      $$
+        s \leftarrow \frac{1}{\tan\displaystyle\frac{\omega_0}{2}} \frac{1-z^{-1}}{1+z^{-1}}
+      $$
+
     
     <p>and makes use of these trig identities:</p>
     <ol>
       <li>
-        <math title="tan(ω_0/2) = sin(ω_0) / 1 + cos(ω_0) " display="block"><mrow><mo>tan</mo><mrow><mo>(</mo><mi>ω</mi><mfrac><mn>0</mn><mn>2</mn></mfrac><mo>)</mo></mrow></mrow><mo>=</mo><mfrac><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mn>1</mn></mfrac><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></math>
+          $$
+            \tan\frac{\omega_0}{2} = \frac{\sin\omega_0}{1+\cos\omega_0}
+          $$
+
       </li>
       
       <li>
-        <math title="(tan(ω_0/2))^2 = 1 - cos(ω_0) / 1 + cos(ω_0) " display="block"><msup><mrow><mo>(</mo><mrow><mo>tan</mo><mrow><mo>(</mo><mi>ω</mi><mfrac><mn>0</mn><mn>2</mn></mfrac><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mn>1</mn></mfrac><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></math>
+          $$
+            \left(\tan\frac{\omega_0}{2}\right)^2 = \frac{1-\cos\omega_0}{1+\cos\omega_0}
+          $$
+
       </li>
     </ol>
 
     <p>resulting in these substitutions:</p>
     <ol>
       <li>
-        <math title="1 = 1 + cos(ω_0) / 1 + cos(ω_0) * 1 + 2*z^-1 + z^-2 / 1 + 2*z^-1 + z^-2 " display="block"><mn>1</mn><mo>←</mo><mn>1</mn><mo>+</mo><mfrac><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mn>1</mn></mfrac><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>⋅</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mn>1</mn></mfrac><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup></math>
+          $$
+            1 \leftarrow \frac{1+\cos\omega_0}{1+\cos\omega_0}\frac{1+2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
+          $$
+
       </li>
       
       <li>
-        <math title="{: (s = 1 + cos(ω_0) / sin(ω_0) * 1 - z^-1 / 1 + z^-1), (= 1 + cos(ω_0) / sin(ω_0) * 1 - z^-2/ 1 + 2*z^-1 + z^-2) :}" display="block"><mrow><mtable columnalign="left"><mtr><mtd><mi>s</mi><mo>←</mo><mn>1</mn><mo>+</mo><mfrac><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mfrac><mo>⋅</mo><mn>1</mn><mo>-</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mn>1</mn></mfrac><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup></mtd></mtr><mtr><mtd><mo>=</mo><mn>1</mn><mo>+</mo><mfrac><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mfrac><mo>⋅</mo><mn>1</mn><mo>-</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mn>1</mn></mfrac><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup></mtd></mtr></mtable></mrow></math>
+          $$
+            \begin{align*}
+              s \leftarrow & \frac{1+\cos\omega_0}{\sin\omega_0}
+              \frac{1-z^{-1}}{1+z^{-1}} \\
+                & = \frac{1+\cos\omega_0}{\sin\omega_0} \frac{1-z^{-2}}{1+2z^{-1}+z^{-2}}
+            \end{align*}
+          $$
+
       </li>
       
       <li>
-        <math title="s^2 = 1 + cos(ω_0) / 1 - cos(ω_0) * 1 - 2*z^-1 + z^-2 / 1 + 2*z^-1 + z^-2 " display="block"><msup><mi>s</mi><mn>2</mn></msup><mo>←</mo><mn>1</mn><mo>+</mo><mfrac><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mn>1</mn></mfrac><mo>-</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>⋅</mo><mn>1</mn><mo>-</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mn>1</mn></mfrac><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup></math>
+          $$
+            s^2 \leftarrow \frac{1+\cos\omega_0}{1-\cos\omega_0} \frac{1-2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
+          $$
+
       </li>
     </ol>
     
@@ -1002,41 +467,69 @@
 
     <p>The factor:</p>
 
-    <math title="1 + cos(ω_0) / 1 + 2*z^-1 + z^-2 " display="block"><mn>1</mn><mo>+</mo><mfrac><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mn>1</mn></mfrac><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup></math>
+      $$
+        \frac{1+\cos\omega_0}{1+2z^{-1}+z^{-2}}
+      $$
+
 
     <p>is common to all terms in both numerator and denominator, can be factored
     out, and thus be left out in the substitutions above resulting in:</p>
     <ol>
       <li>
-        <math title="1 = 1 + 2*z^-1 + z^-2 / 1 + cos(ω_0) " display="block"><mn>1</mn><mo>←</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mn>1</mn></mfrac><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></math>
+          $$
+            1 \leftarrow \frac{1+2z^{-1}+z^{-2}}{1+\cos\omega_0}
+          $$
+
       </li>
       
       <li>
-        <math title="s = 1 - z^-2 / sin(ω_0) " display="block"><mi>s</mi><mo>←</mo><mn>1</mn><mo>-</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></mfrac></math>
+          $$
+            s \leftarrow \frac{1-z^{-2}}{\sin\omega_0}
+          $$
+
       </li>
       
       <li>
-        <math title="s^2 = 1 - 2*z^-1 + z^-2 / 1 - cos(ω_0) " display="block"><msup><mi>s</mi><mn>2</mn></msup><mo>←</mo><mn>1</mn><mo>-</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><mfrac><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mn>1</mn></mfrac><mo>-</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></math>
+          $$
+            s^2 = \frac{1-2z^{-1}+z^{-2}}{1-\cos\omega_0}
+          $$
+
       </li>
     </ol>
     
     <p>In addition, all terms, numerator and denominator, can be multiplied by a
-    common <math title="(sin(ω_0))^2 " display="block"><msup><mrow><mo>(</mo><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow><mn>2</mn></msup></math> factor, finally resulting in these substitutions:<p>
+    common
+        $$
+          \sin^2\omega_0
+        $$
+	factor, finally resulting in these substitutions:<p>
     <ol>
       <li>
-        <math title="1 = (1 + 2*z^-1 + z^-2) * (1 - cos(ω_0)) " display="block"><mn>1</mn><mo>←</mo><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mn>1</mn><mo>-</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow></math>
+              $$
+                1 \leftarrow (1 + 2z^{-1} + z^{-2}) (1 - \cos\omega_0)
+              $$
+
       </li>
 
       <li>
-        <math title="s = (1 - z^-2) * sin(ω_0) " display="block"><mi>s</mi><mo>←</mo><mrow><mo>(</mo><mn>1</mn><mo>-</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>sin</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow></math>
+              $$
+                s \leftarrow (1-z^{-2})\sin\omega_0
+              $$
+
       </li>
 
       <li>
-        <math title="s^2 = (1 - 2*z^-1 + z^-2) * (1 + cos(ω_0)) " display="block"><msup><mi>s</mi><mn>2</mn></msup><mo>←</mo><mrow><mo>(</mo><mn>1</mn><mo>-</mo><mn>2</mn><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mo>)</mo></mrow><mo>⋅</mo><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>)</mo></mrow></math>
+              $$
+                s^2 = (1 - 2z^{-1} + z^{-2}) (1 + \cos\omega_0)
+              $$
+
       </li>
 
       <li>
-        <math title="1 + s^2 = 2 * (1 - 2*cos(ω_0)*z^-1 + z^-2) " display="block"><mn>1</mn><mo>+</mo><msup><mi>s</mi><mn>2</mn></msup><mo>←</mo><mn>2</mn><mo>⋅</mo><mrow><mo>(</mo><mn>1</mn><mo>-</mo><mn>2</mn><mo>⋅</mo><mrow><mo>cos</mo><mrow><mo>(</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow><mo>⋅</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mi>z</mi><mrow><mo>-</mo><mn>2</mn></mrow></msup><mo>)</mo></mrow></math>
+              $$
+              1 + s^2 = 2\, (1 - 2\cos\omega_0\,z^{-1} + z^{-2})
+              $$
+
       </li>
     </ol>
     
