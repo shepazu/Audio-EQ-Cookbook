@@ -10,40 +10,27 @@
           }
         };
       </script>
-	<script type="text/javascript"
+	<script 
     src="http://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
-  <style type="text/css" media="screen">
+  <style media="screen">
     body {
       width: 45em;
       margin-left: auto;
       margin-right: auto;
     }
     
-    math, span.MathJax {
-      display: block; !
-    }
-    
-    dt math, dt span.MathJax, p math, p span.MathJax {
-      display: inline; !
-    }
-    
-    .label, mtext, .mtext {
+    .label {
       font-style: italic;
       color: gray;
     }
     
-
     dl {
     	margin: 2em 0;
     	padding: 0;
     	font-family: georgia, times, serif;
     }
     
-     dd dl {
-     	margin: 0;
-     }
-
     dt {
     	position: relative;
     	left: 0;
@@ -72,6 +59,7 @@
   <p>Adapted from <a href="http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt">http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt</a>, with permission.</p>  
   
   <section>
+      <h2>Biquad Filter Formulae</h2>
     <p>All filter transfer functions were derived from analog prototypes (that
     are shown below for each equalizer (EQ) filter type) and had been digitized using the
     Bilinear Transform (BLT).  BLT frequency warping has been taken into account for
@@ -205,7 +193,7 @@
 
     <p>FYI: The relationship between bandwidth and Q is</p>
 
-    <p class="label" id="">digital filter with BLT</p>
+    <p class="label">digital filter with BLT</p>
       $$
         \frac{1}{Q} = 2\sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW} \cdot
         \frac{\omega_0}{\sin \omega_0}\right)
@@ -213,7 +201,7 @@
 
     <p>or</p> 
     
-    <p class="label" id="">analog filter prototype</p>
+    <p class="label">analog filter prototype</p>
       $$
         \frac{1}{Q} = 2 \sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW}\right)
       $$
@@ -404,7 +392,7 @@
     
     <p>FYI: The bilinear transform (with compensation for frequency warping) substitutes:</p>
 
-    <p class="label" id="">(normalized)</p>
+    <p class="label">(normalized)</p>
       $$
         s \leftarrow \frac{1}{\tan\displaystyle\frac{\omega_0}{2}} \frac{1-z^{-1}}{1+z^{-1}}
       $$
@@ -536,7 +524,7 @@
     <h2>Acknowledgements</h2>
     <p>Special thanks to <a href="mailto:rbj@audioimagination.com">Robert Bristow-Johnson</a> for creating the  Audio EQ Cookbook and permitting its adaption and use for the Web Audio API.<p>
     <p>Thanks to <a href="mailto:peter.krautzberger@mathjax.org">Peter Krautzberger</a> for help in adapting these mathematical formulae to MathML, and to the whole <a href="http://www.mathjax.org/">MathJax</a> team for making the JavaScript extension that makes the use of math on the web possible.</p>
-    <p>Thanks to Peter Jipsen, creator of <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a>, for making it easier to convert ASCII math notation to MathML.</a>
+    <p>Thanks to Peter Jipsen, creator of <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a>, for making it easier to convert ASCII math notation to MathML.
     
   </section>
   
