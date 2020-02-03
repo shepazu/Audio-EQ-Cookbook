@@ -172,14 +172,14 @@ it's not a custom element.
       </li>
       <li>
         <displayed-eqn>         $$
-            \begin{align*}
+            \begin{align}
               \alpha &amp;= \frac{\sin \omega_0}{2 Q} & \textrm{(case: Q)} \\
                      &amp;= \sin \omega_0 \, \sinh\left(\frac{\log 2}{2} \cdot
                      \mathrm{BW} \cdot 
                      \frac{\omega_0}{\sin \omega_0}\right) & \textrm{(case: BW)} \\
                      &amp;= \frac{\sin \omega_0}{2} \sqrt{\left(A +
                      \frac{1}{A}\right) \left(\frac{1}{S} - 1\right) + 2} & \textrm{(case: S)}
-            \end{align*}
+            \end{align}
           $$
 </displayed-eqn>
       </li>
@@ -187,25 +187,33 @@ it's not a custom element.
     <p>FYI: The relationship between bandwidth and Q is</p>
     <p class="label">digital filter with BLT</p>
     <displayed-eqn>     $$
-        \frac{1}{Q} = 2\sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW} \cdot
-        \frac{\omega_0}{\sin \omega_0}\right)
+	\begin{equation}
+          \frac{1}{Q} = 2\sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW} \cdot
+          \frac{\omega_0}{\sin \omega_0}\right)
+	\end{equation}
       $$
 </displayed-eqn>
     <p>or</p>
     <p class="label">analog filter prototype</p>
     <displayed-eqn>     $$
-        \frac{1}{Q} = 2 \sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW}\right)
+	\begin{equation}
+          \frac{1}{Q} = 2 \sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW}\right)
+	\end{equation}
       $$
 </displayed-eqn>
     <p>The relationship between shelf slope and Q is</p>
     <displayed-eqn>     $$
-        \frac{1}{Q} = \sqrt{\left(A + \frac{1}{A}\right) \left(\frac{1}{S} -
-        1\right) + 2}
+	\begin{equation}
+          \frac{1}{Q} = \sqrt{\left(A + \frac{1}{A}\right) \left(\frac{1}{S} -
+          1\right) + 2}
+	\end{equation}
       $$
 </displayed-eqn>
     <displayed-eqn>     $$
-        2\sqrt{A}\,\alpha = (\sin \omega_0)\, \sqrt{\left(A^2 +
-        1\right)\left(\frac{1}{S}-1\right) + 2A}
+	\begin{equation}
+          2\sqrt{A}\,\alpha = (\sin \omega_0)\, \sqrt{\left(A^2 +
+          1\right)\left(\frac{1}{S}-1\right) + 2A}
+	\end{equation}
       $$
 </displayed-eqn>
     <p>is a handy intermediate variable for shelving EQ filters.</p>
@@ -214,10 +222,12 @@ it's not a custom element.
     <p>(The analog prototypes, H(s), are shown for each filter type for
     normalized frequency.)</p>
     <dl>
-      <dt>LPF</dt>
+      <dt id="LPF-eqn">LPF</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = \frac{1}{s^2 + \displaystyle\frac{s}{Q} + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -232,10 +242,12 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>HPF</dt>
+      <dt id="HPF-eqn">HPF</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = \frac{s^2}{s^2 + \displaystyle\frac{s}{Q} + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -250,12 +262,14 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>BPF<br>
+      <dt id="BPF-eqn-constant-skirt-gain">BPF<br>
       (constant skirt gain,<br>
       peak gain = Q)</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = \frac{s}{s^2 + \displaystyle\frac{s}{Q} + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -270,11 +284,13 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>BPF<br>
+      <dt id="BPF-eqn-0dB-peak">BPF<br>
       (constant 0 dB peak gain)</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = \frac{\displaystyle\frac{s}{Q}}{s^2 + \displaystyle\frac{s}{Q} + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -289,10 +305,12 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>notch</dt>
+      <dt id="notch-eqn">notch</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = \frac{s^2 + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -307,10 +325,12 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>APF</dt>
+      <dt id="APF-eqn">APF</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = \frac{s^2 - \displaystyle\frac{s}{Q} + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -325,10 +345,12 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>peakingEQ</dt>
+      <dt id="peaking-eqn">peakingEQ</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = \frac{s^2 + s\displaystyle\frac{A}{Q} + 1}{s^2 + \displaystyle\frac{s}{AQ} + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -343,11 +365,13 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>lowShelf</dt>
+      <dt id="lowshelf-eqn">lowShelf</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = A \frac{s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
                           {A*s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + 1}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
@@ -362,11 +386,13 @@ it's not a custom element.
           $$
 </displayed-eqn>
       </dd>
-      <dt>highShelf</dt>
+      <dt id="highshelf-eqn">highShelf</dt>
       <dd>
         <displayed-eqn>         $$
+	\begin{equation}
             H(s) = A \frac{As^2 + \displaystyle\frac{\sqrt{A}}{Q}s + 1}
                    {s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
+	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
