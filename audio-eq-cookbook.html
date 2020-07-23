@@ -127,7 +127,7 @@ it's not a custom element.
       <dd>
         <dl>
           <dt>\(Q\)</dt>
-          <dd>the EE kind of definition, except for peakingEQ in which A*Q is
+          <dd>the EE kind of definition, except for peakingEQ in which \(A\cdot Q\) is
           the classic EE Q. That adjustment in definition was made so that a
           boost of N dB followed by a cut of N dB for identical Q and f0/Fs
           results in a precisely flat unity gain filter or "wire".</dd>
@@ -370,17 +370,17 @@ it's not a custom element.
         <displayed-eqn>         $$
 	\begin{equation}
             H(s) = A \frac{s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
-                          {A*s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + 1}
+                          {As^2 + \displaystyle\frac{\sqrt{A}}{Q} s + 1}
 	\end{equation}
           $$
 </displayed-eqn>
         <displayed-eqn>         $$
             \begin{align*}
               b_0 &amp;=    A\left( (A+1) - (A-1)\cos\omega_0 + 2\sqrt{A}\, \alpha \right) \\
-              b_1 &amp;=  2A\left( (A-1) - (A+1)\cos\omega_0                   \right) \\
+              b_1 &amp;=  2A\Big( (A-1) - (A+1)\cos\omega_0                   \Big) \\
               b_2 &amp;=    A\left( (A+1) - (A-1)\cos\omega_0 - 2\sqrt{A}\, \alpha \right) \\
               a_0 &amp;=        (A+1) + (A-1)\cos\omega_0 + 2\sqrt{A}\, \alpha \\
-              a_1 &amp;=   -2\left( (A-1) + (A+1)\cos\omega_0                   \right) \\
+              a_1 &amp;=   -2\Big( (A-1) + (A+1)\cos\omega_0                   \Big) \\
               a_2 &amp;=        (A+1) + (A-1)\cos\omega_0 - 2\sqrt{A}\, \alpha
             \end{align*}
           $$
@@ -398,10 +398,10 @@ it's not a custom element.
         <displayed-eqn>         $$
             \begin{align*}
               b_0 &amp;=    A\left( (A+1) + (A-1)\cos\omega_0 + 2\sqrt{A}\alpha \right) \\
-              b_1 &amp;= -2A\left( (A-1) + (A+1)\cos\omega_0                   \right) \\
+              b_1 &amp;= -2A\Big( (A-1) + (A+1)\cos\omega_0                   \Big) \\
               b_2 &amp;=    A\left( (A+1) + (A-1)\cos\omega_0 - 2\sqrt{A}\alpha \right) \\
               a_0 &amp;=        (A+1) - (A-1)\cos\omega_0 + 2\sqrt{A}\alpha \\
-              a_1 &amp;=    2\left( (A-1) - (A+1)\cos\omega_0                   \right) \\
+              a_1 &amp;=    2\Big( (A-1) - (A+1)\cos\omega_0                   \Big) \\
               a_2 &amp;=        (A+1) - (A-1)\cos\omega_0 - 2\sqrt{A}\alpha
             \end{align*}
           $$
