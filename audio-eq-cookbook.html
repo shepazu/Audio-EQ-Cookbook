@@ -128,19 +128,19 @@ it's not a custom element.
         <dl>
           <dt>\(Q\)</dt>
           <dd>the EE kind of definition, except for peakingEQ in which \(A\cdot Q\) is
-          the classic EE Q. That adjustment in definition was made so that a
-          boost of N dB followed by a cut of N dB for identical Q and f0/Fs
+          the classic EE \(Q\). That adjustment in definition was made so that a
+          boost of \(N\) dB followed by a cut of \(N\) dB for identical \(Q\) and \(f_0/F_s\)
           results in a precisely flat unity gain filter or "wire".</dd>
           <dt>\(\mathrm{BW}\)</dt>
           <dd>the bandwidth in octaves (between -3 dB frequencies for BPF and
-          notch or between midpoint (dBgain/2) gain frequencies for peaking
+          notch or between midpoint (\(\mathrm{dBgain}/2\)) gain frequencies for peaking
           EQ)</dd>
           <dt>\(S\)</dt>
-          <dd>a "shelf slope" parameter (for shelving EQ only). When S = 1, the
+          <dd>a "shelf slope" parameter (for shelving EQ only). When \(S = 1\), the
           shelf slope is as steep as it can be and remain monotonically
           increasing or decreasing gain with frequency. The shelf slope, in
-          dB/octave, remains proportional to S for all other values for a fixed
-          f0/Fs and dBgain</dd>
+          dB/octave, remains proportional to \(S\) for all other values for a fixed
+          \(f_0/F_s\) and \(\mathrm{dBgain}\).</dd>
         </dl>
       </dd>
     </dl>
@@ -184,7 +184,7 @@ it's not a custom element.
 </displayed-eqn>
       </li>
     </ol>
-    <p>FYI: The relationship between bandwidth and Q is</p>
+    <p>FYI: The relationship between bandwidth and \(Q\) is</p>
     <p class="label">digital filter with BLT</p>
     <displayed-eqn>     $$
 	\begin{equation}
@@ -201,7 +201,7 @@ it's not a custom element.
 	\end{equation}
       $$
 </displayed-eqn>
-    <p>The relationship between shelf slope and Q is</p>
+    <p>The relationship between shelf slope, \(S\), and \(Q\) is</p>
     <displayed-eqn>     $$
 	\begin{equation}
           \frac{1}{Q} = \sqrt{\left(A + \frac{1}{A}\right) \left(\frac{1}{S} -
@@ -264,7 +264,7 @@ it's not a custom element.
       </dd>
       <dt id="BPF-eqn-constant-skirt-gain">BPF<br>
       (constant skirt gain,<br>
-      peak gain = Q)</dt>
+      peak gain = \(Q\))</dt>
       <dd>
         <displayed-eqn>         $$
 	\begin{equation}
