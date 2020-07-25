@@ -76,17 +76,19 @@
     readjustment (since the bandwidth is compressed when mapped from analog to
     digital using the BLT).</p>
     <p>First, given a biquad transfer function defined as:</p>
-    <pre>   $$
+    <pre>
+      $$
       \begin{equation}
         H(z) = \frac{b_0 + b_1z^{-1}+b_2z^{-2}}{a_0 + a_1z^{-1}+a_2z^{-2}}
       \end{equation}
-    $$
+      $$
 </pre>
     <p>This shows 6 coefficients instead of 5 so, depending on your
     architecture, you will likely normalize \( a_0 \) to be 1 and perhaps also
     \(b_0\) to 1 (and collect that into an overall gain coefficient). Then your
     transfer function would look like:</p>
-    <pre>     $$
+    <pre>
+      $$
       \begin{equation}
         H(z) = \frac{\left(\displaystyle\frac{b_0}{a_0}\right) + \left(\displaystyle\frac{b_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{b_2}{a_0}\right)z^{-2}}{1 + \left(\displaystyle\frac{a_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{a_2}{a_0}\right)z^{-2}}
         \label{direct-form-1}
@@ -94,7 +96,8 @@
       $$
 </pre>
     <p>or:</p>
-    <pre>     $$
+    <pre>
+      $$
       \begin{equation}
         H(z) = \left(\frac{b_0}{a_0}\right) \frac{1 + \left(\displaystyle\frac{b_1}{b_0}\right)z^{-1}+\left(\displaystyle\frac{b_2}{b_0}\right)z^{-2}}{1 + \left(\displaystyle\frac{a_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{a_2}{a_0}\right)z^{-2}}
       \end{equation}
@@ -102,7 +105,8 @@
 </pre>
     <p>The most straight forward implementation would be the "Direct Form 1"
     (\(eq. \ref{direct-form-1}\)):</p>
-    <pre>     $$
+    <pre>
+      $$
       \begin{align}
       y[n] = \left(\frac{b_0}{a_0}\right)x[n] & +
       \left(\frac{b_1}{a_0}\right)x[n-1] + \left(\frac{b_2}{a_0}\right)x[n-2]
@@ -149,7 +153,8 @@
     <p>Then compute a few intermediate variables:</p>
     <ol>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               A &amp;= \sqrt{10^{\mathrm{dBgain}/20}} & \\
                 & = 10^{\mathrm{dBgain}/40} & \textrm{(for peaking and shelving EQ filters only)}
@@ -158,13 +163,15 @@
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
           \omega_0 = 2 \pi \frac{f_0}{F_s}
           $$
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               & \cos \omega_0 \\
               & \sin \omega_0
@@ -173,7 +180,8 @@
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align}
               \alpha &amp;= \frac{\sin \omega_0}{2 Q} & \textrm{(case: Q)} \\
                      &amp;= \sin \omega_0 \, \sinh\left(\frac{\log 2}{2} \cdot
@@ -188,7 +196,8 @@
     </ol>
     <p>FYI: The relationship between bandwidth and \(Q\) is</p>
     <p class="label">digital filter with BLT</p>
-    <pre>     $$
+    <pre>
+      $$
         \begin{equation}
           \frac{1}{Q} = 2\sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW} \cdot
           \frac{\omega_0}{\sin \omega_0}\right)
@@ -197,21 +206,24 @@
 </pre>
     <p>or</p>
     <p class="label">analog filter prototype</p>
-    <pre>     $$
+    <pre>
+      $$
         \begin{equation}
           \frac{1}{Q} = 2 \sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW}\right)
         \end{equation}
       $$
 </pre>
     <p>The relationship between shelf slope, \(S\), and \(Q\) is</p>
-    <pre>     $$
+    <pre>
+      $$
         \begin{equation}
           \frac{1}{Q} = \sqrt{\left(A + \frac{1}{A}\right) \left(\frac{1}{S} -
           1\right) + 2}
         \end{equation}
       $$
 </pre>
-    <pre>     $$
+    <pre>
+      $$
         \begin{equation}
           2\sqrt{A}\,\alpha = (\sin \omega_0)\, \sqrt{\left(A^2 +
           1\right)\left(\frac{1}{S}-1\right) + 2A}
@@ -226,13 +238,15 @@
     <dl>
       <dt id="LPF-eqn">LPF</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = \frac{1}{s^2 + \displaystyle\frac{s}{Q} + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;= \frac{1-\cos\omega_0}{2} \\
               b_1 &amp;= 1-\cos\omega_0 \\
@@ -246,13 +260,15 @@
       </dd>
       <dt id="HPF-eqn">HPF</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = \frac{s^2}{s^2 + \displaystyle\frac{s}{Q} + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=  \frac{1 + \cos \omega_0}{2} \\
               b_1 &amp;= -(1 + \cos \omega_0) \\
@@ -268,13 +284,15 @@
       (constant skirt gain,<br>
       peak gain = \(Q\))</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = \frac{s}{s^2 + \displaystyle\frac{s}{Q} + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=   \frac{\sin\omega_0}{2}  =   Q \alpha \\
               b_1 &amp;=   0 \\
@@ -289,13 +307,15 @@
       <dt id="BPF-eqn-0dB-peak">BPF<br>
       (constant 0 dB peak gain)</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = \frac{\displaystyle\frac{s}{Q}}{s^2 + \displaystyle\frac{s}{Q} + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=   \alpha \\
               b_1 &amp;=   0 \\
@@ -309,13 +329,15 @@
       </dd>
       <dt id="notch-eqn">notch</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = \frac{s^2 + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=   1 \\
               b_1 &amp;=  -2\cos \omega_0 \\
@@ -329,13 +351,15 @@
       </dd>
       <dt id="APF-eqn">APF</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = \frac{s^2 - \displaystyle\frac{s}{Q} + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=   1 - \alpha \\
               b_1 &amp;=  -2\cos\omega_0 \\
@@ -349,13 +373,15 @@
       </dd>
       <dt id="peaking-eqn">peakingEQ</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = \frac{s^2 + s\displaystyle\frac{A}{Q} + 1}{s^2 + \displaystyle\frac{s}{AQ} + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=   1 + \alpha A \\
               b_1 &amp;=  -2\cos\omega_0 \\
@@ -369,14 +395,16 @@
       </dd>
       <dt id="lowshelf-eqn">lowShelf</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = A \frac{s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
                           {As^2 + \displaystyle\frac{\sqrt{A}}{Q} s + 1}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=    A\left( (A+1) - (A-1)\cos\omega_0 + 2\sqrt{A}\, \alpha \right) \\
               b_1 &amp;=  2A\Big( (A-1) - (A+1)\cos\omega_0                   \Big) \\
@@ -390,14 +418,16 @@
       </dd>
       <dt id="highshelf-eqn">highShelf</dt>
       <dd>
-        <pre>         $$
+        <pre>
+          $$
         \begin{equation}
             H(s) = A \frac{As^2 + \displaystyle\frac{\sqrt{A}}{Q}s + 1}
                    {s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
         \end{equation}
           $$
 </pre>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               b_0 &amp;=    A\left( (A+1) + (A-1)\cos\omega_0 + 2\sqrt{A}\alpha \right) \\
               b_1 &amp;= -2A\Big( (A-1) + (A+1)\cos\omega_0                   \Big) \\
@@ -413,20 +443,23 @@
     <p>FYI: The bilinear transform (with compensation for frequency warping)
     substitutes:</p>
     <p class="label">(normalized)</p>
-    <pre>     $$
+    <pre>
+      $$
         s \leftarrow \frac{1}{\tan\displaystyle\frac{\omega_0}{2}} \frac{1-z^{-1}}{1+z^{-1}}
       $$
 </pre>
     <p>and makes use of these trig identities:</p>
     <ol>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             \tan\frac{\omega_0}{2} = \frac{\sin\omega_0}{1+\cos\omega_0}
           $$
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             \left(\tan\frac{\omega_0}{2}\right)^2 = \frac{1-\cos\omega_0}{1+\cos\omega_0}
           $$
 </pre>
@@ -435,13 +468,15 @@
     <p>resulting in these substitutions:</p>
     <ol>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             1 \leftarrow \frac{1+\cos\omega_0}{1+\cos\omega_0}\frac{1+2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
           $$
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             \begin{align*}
               s \leftarrow & \frac{1+\cos\omega_0}{\sin\omega_0}
               \frac{1-z^{-1}}{1+z^{-1}} \\
@@ -451,14 +486,16 @@
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             s^2 \leftarrow \frac{1+\cos\omega_0}{1-\cos\omega_0} \frac{1-2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
           $$
 </pre>
       </li>
     </ol>
     <p>The factor:</p>
-    <pre>     $$
+    <pre>
+      $$
         \frac{1+\cos\omega_0}{1+2z^{-1}+z^{-2}}
       $$
 </pre>
@@ -467,19 +504,22 @@
     in:</p>
     <ol>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             1 \leftarrow \frac{1+2z^{-1}+z^{-2}}{1+\cos\omega_0}
           $$
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             s \leftarrow \frac{1-z^{-2}}{\sin\omega_0}
           $$
 </pre>
       </li>
       <li>
-        <pre>         $$
+        <pre>
+          $$
             s^2 \leftarrow \frac{1-2z^{-1}+z^{-2}}{1-\cos\omega_0}
           $$
 </pre>
@@ -487,31 +527,36 @@
     </ol>
     <p>In addition, all terms, numerator and denominator, can be multiplied by
     a common</p>
-    <pre>       $$
+    <pre>
+        $$
           \sin^2\omega_0
         $$
 </pre>factor, finally resulting in these substitutions:
     <ol>
       <li>
-        <pre>             $$
+        <pre>
+              $$
                 1 \leftarrow (1 + 2z^{-1} + z^{-2}) (1 - \cos\omega_0)
               $$
 </pre>
       </li>
       <li>
-        <pre>             $$
+        <pre>
+              $$
                 s \leftarrow (1-z^{-2})\sin\omega_0
               $$
 </pre>
       </li>
       <li>
-        <pre>             $$
+        <pre>
+              $$
                 s^2 \leftarrow (1 - 2z^{-1} + z^{-2}) (1 + \cos\omega_0)
               $$
 </pre>
       </li>
       <li>
-        <pre>             $$
+        <pre>
+              $$
               1 + s^2 \leftarrow 2\, (1 - 2\cos\omega_0\,z^{-1} + z^{-2})
               $$
 </pre>
