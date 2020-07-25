@@ -9,12 +9,14 @@
        // Allows automatic numbering
        tags: 'ams'
      },
-     // Tell MathJax to look for math in code and pre tags.
-     skipHTMLTags: {'[-]': ['code', 'pre']}
+     options: {
+       // Tell MathJax to look for math in code and pre tags.
+       skipHtmlTags: {'[-]': ['code', 'pre']}
+     }
    };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-  </script>
+  <script src=
+  "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   <style media="screen">
     body {
       width: 45em;
@@ -74,37 +76,33 @@
     readjustment (since the bandwidth is compressed when mapped from analog to
     digital using the BLT).</p>
     <p>First, given a biquad transfer function defined as:</p>
-    <!-- displayed-eqn is just a random tag to keep html tidy from indenting the
-contents which could mangle the equations.  It's not used for anything else, and
-it's not a custom element.
--->
-    <displayed-eqn>   $$
+    <pre>   $$
       \begin{equation}
         H(z) = \frac{b_0 + b_1z^{-1}+b_2z^{-2}}{a_0 + a_1z^{-1}+a_2z^{-2}}
       \end{equation}
     $$
-</displayed-eqn>
+</pre>
     <p>This shows 6 coefficients instead of 5 so, depending on your
     architecture, you will likely normalize \( a_0 \) to be 1 and perhaps also
     \(b_0\) to 1 (and collect that into an overall gain coefficient). Then your
     transfer function would look like:</p>
-    <displayed-eqn>     $$
+    <pre>     $$
       \begin{equation}
         H(z) = \frac{\left(\displaystyle\frac{b_0}{a_0}\right) + \left(\displaystyle\frac{b_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{b_2}{a_0}\right)z^{-2}}{1 + \left(\displaystyle\frac{a_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{a_2}{a_0}\right)z^{-2}}
         \label{direct-form-1}
       \end{equation}
       $$
-</displayed-eqn>
+</pre>
     <p>or:</p>
-    <displayed-eqn>     $$
+    <pre>     $$
       \begin{equation}
         H(z) = \left(\frac{b_0}{a_0}\right) \frac{1 + \left(\displaystyle\frac{b_1}{b_0}\right)z^{-1}+\left(\displaystyle\frac{b_2}{b_0}\right)z^{-2}}{1 + \left(\displaystyle\frac{a_1}{a_0}\right)z^{-1}+\left(\displaystyle\frac{a_2}{a_0}\right)z^{-2}}
       \end{equation}
       $$
-</displayed-eqn>
+</pre>
     <p>The most straight forward implementation would be the "Direct Form 1"
     (\(eq. \ref{direct-form-1}\)):</p>
-    <displayed-eqn>     $$
+    <pre>     $$
       \begin{align}
       y[n] = \left(\frac{b_0}{a_0}\right)x[n] & +
       \left(\frac{b_1}{a_0}\right)x[n-1] + \left(\frac{b_2}{a_0}\right)x[n-2]
@@ -112,7 +110,7 @@ it's not a custom element.
       &amp;-\left(\frac{a_1}{a_0}\right)y[n-1] - \left(\frac{a_2}{a_0}\right)y[n-2]
       \end{align}
       $$
-</displayed-eqn>
+</pre>
     <p>This is probably both the best and the easiest method to implement in
     the 56K and other fixed-point or floating-point architectures with a double
     wide accumulator.</p>
@@ -130,51 +128,52 @@ it's not a custom element.
       <dd>
         <dl>
           <dt>\(Q\)</dt>
-          <dd>the EE kind of definition, except for peakingEQ in which \(A\cdot Q\) is
-          the classic EE \(Q\). That adjustment in definition was made so that a
-          boost of \(N\) dB followed by a cut of \(N\) dB for identical \(Q\) and \(f_0/F_s\)
-          results in a precisely flat unity gain filter or "wire".</dd>
+          <dd>the EE kind of definition, except for peakingEQ in which \(A\cdot
+          Q\) is the classic EE \(Q\). That adjustment in definition was made
+          so that a boost of \(N\) dB followed by a cut of \(N\) dB for
+          identical \(Q\) and \(f_0/F_s\) results in a precisely flat unity
+          gain filter or "wire".</dd>
           <dt>\(\mathrm{BW}\)</dt>
           <dd>the bandwidth in octaves (between -3 dB frequencies for BPF and
-          notch or between midpoint (\(\mathrm{dBgain}/2\)) gain frequencies for peaking
-          EQ)</dd>
+          notch or between midpoint (\(\mathrm{dBgain}/2\)) gain frequencies
+          for peaking EQ)</dd>
           <dt>\(S\)</dt>
-          <dd>a "shelf slope" parameter (for shelving EQ only). When \(S = 1\), the
-          shelf slope is as steep as it can be and remain monotonically
+          <dd>a "shelf slope" parameter (for shelving EQ only). When \(S = 1\),
+          the shelf slope is as steep as it can be and remain monotonically
           increasing or decreasing gain with frequency. The shelf slope, in
-          dB/octave, remains proportional to \(S\) for all other values for a fixed
-          \(f_0/F_s\) and \(\mathrm{dBgain}\).</dd>
+          dB/octave, remains proportional to \(S\) for all other values for a
+          fixed \(f_0/F_s\) and \(\mathrm{dBgain}\).</dd>
         </dl>
       </dd>
     </dl>
     <p>Then compute a few intermediate variables:</p>
     <ol>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             \begin{align*}
               A &amp;= \sqrt{10^{\mathrm{dBgain}/20}} & \\
                 & = 10^{\mathrm{dBgain}/40} & \textrm{(for peaking and shelving EQ filters only)}
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
           \omega_0 = 2 \pi \frac{f_0}{F_s}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             \begin{align*}
               & \cos \omega_0 \\
               & \sin \omega_0
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             \begin{align}
               \alpha &amp;= \frac{\sin \omega_0}{2 Q} & \textrm{(case: Q)} \\
                      &amp;= \sin \omega_0 \, \sinh\left(\frac{\log 2}{2} \cdot
@@ -184,41 +183,41 @@ it's not a custom element.
                      \frac{1}{A}\right) \left(\frac{1}{S} - 1\right) + 2} & \textrm{(case: S)}
             \end{align}
           $$
-</displayed-eqn>
+</pre>
       </li>
     </ol>
     <p>FYI: The relationship between bandwidth and \(Q\) is</p>
     <p class="label">digital filter with BLT</p>
-    <displayed-eqn>     $$
-	\begin{equation}
+    <pre>     $$
+        \begin{equation}
           \frac{1}{Q} = 2\sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW} \cdot
           \frac{\omega_0}{\sin \omega_0}\right)
-	\end{equation}
+        \end{equation}
       $$
-</displayed-eqn>
+</pre>
     <p>or</p>
     <p class="label">analog filter prototype</p>
-    <displayed-eqn>     $$
-	\begin{equation}
+    <pre>     $$
+        \begin{equation}
           \frac{1}{Q} = 2 \sinh\left(\frac{\log 2}{2} \cdot \mathrm{BW}\right)
-	\end{equation}
+        \end{equation}
       $$
-</displayed-eqn>
+</pre>
     <p>The relationship between shelf slope, \(S\), and \(Q\) is</p>
-    <displayed-eqn>     $$
-	\begin{equation}
+    <pre>     $$
+        \begin{equation}
           \frac{1}{Q} = \sqrt{\left(A + \frac{1}{A}\right) \left(\frac{1}{S} -
           1\right) + 2}
-	\end{equation}
+        \end{equation}
       $$
-</displayed-eqn>
-    <displayed-eqn>     $$
-	\begin{equation}
+</pre>
+    <pre>     $$
+        \begin{equation}
           2\sqrt{A}\,\alpha = (\sin \omega_0)\, \sqrt{\left(A^2 +
           1\right)\left(\frac{1}{S}-1\right) + 2A}
-	\end{equation}
+        \end{equation}
       $$
-</displayed-eqn>
+</pre>
     <p>is a handy intermediate variable for shelving EQ filters.</p>
     <p>Finally, compute the coefficients for whichever filter type you
     want:</p>
@@ -227,13 +226,13 @@ it's not a custom element.
     <dl>
       <dt id="LPF-eqn">LPF</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = \frac{1}{s^2 + \displaystyle\frac{s}{Q} + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;= \frac{1-\cos\omega_0}{2} \\
               b_1 &amp;= 1-\cos\omega_0 \\
@@ -243,17 +242,17 @@ it's not a custom element.
               a_2 &amp;= 1 - \alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="HPF-eqn">HPF</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = \frac{s^2}{s^2 + \displaystyle\frac{s}{Q} + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=  \frac{1 + \cos \omega_0}{2} \\
               b_1 &amp;= -(1 + \cos \omega_0) \\
@@ -263,19 +262,19 @@ it's not a custom element.
               a_2 &amp;=   1 - \alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="BPF-eqn-constant-skirt-gain">BPF<br>
       (constant skirt gain,<br>
       peak gain = \(Q\))</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = \frac{s}{s^2 + \displaystyle\frac{s}{Q} + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=   \frac{\sin\omega_0}{2}  =   Q \alpha \\
               b_1 &amp;=   0 \\
@@ -285,18 +284,18 @@ it's not a custom element.
               a_2 &amp;=   1 - \alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="BPF-eqn-0dB-peak">BPF<br>
       (constant 0 dB peak gain)</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = \frac{\displaystyle\frac{s}{Q}}{s^2 + \displaystyle\frac{s}{Q} + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=   \alpha \\
               b_1 &amp;=   0 \\
@@ -306,17 +305,17 @@ it's not a custom element.
               a_2 &amp;=   1 - \alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="notch-eqn">notch</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = \frac{s^2 + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=   1 \\
               b_1 &amp;=  -2\cos \omega_0 \\
@@ -326,17 +325,17 @@ it's not a custom element.
               a_2 &amp;=   1 - \alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="APF-eqn">APF</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = \frac{s^2 - \displaystyle\frac{s}{Q} + 1}{s^2 + \displaystyle\frac{s}{Q} + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=   1 - \alpha \\
               b_1 &amp;=  -2\cos\omega_0 \\
@@ -346,17 +345,17 @@ it's not a custom element.
               a_2 &amp;=   1 - \alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="peaking-eqn">peakingEQ</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = \frac{s^2 + s\displaystyle\frac{A}{Q} + 1}{s^2 + \displaystyle\frac{s}{AQ} + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=   1 + \alpha A \\
               b_1 &amp;=  -2\cos\omega_0 \\
@@ -366,18 +365,18 @@ it's not a custom element.
               a_2 &amp;=   1 - \frac{\alpha}{A}
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="lowshelf-eqn">lowShelf</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = A \frac{s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
                           {As^2 + \displaystyle\frac{\sqrt{A}}{Q} s + 1}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=    A\left( (A+1) - (A-1)\cos\omega_0 + 2\sqrt{A}\, \alpha \right) \\
               b_1 &amp;=  2A\Big( (A-1) - (A+1)\cos\omega_0                   \Big) \\
@@ -387,18 +386,18 @@ it's not a custom element.
               a_2 &amp;=        (A+1) + (A-1)\cos\omega_0 - 2\sqrt{A}\, \alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
       <dt id="highshelf-eqn">highShelf</dt>
       <dd>
-        <displayed-eqn>         $$
-	\begin{equation}
+        <pre>         $$
+        \begin{equation}
             H(s) = A \frac{As^2 + \displaystyle\frac{\sqrt{A}}{Q}s + 1}
                    {s^2 + \displaystyle\frac{\sqrt{A}}{Q} s + A}
-	\end{equation}
+        \end{equation}
           $$
-</displayed-eqn>
-        <displayed-eqn>         $$
+</pre>
+        <pre>         $$
             \begin{align*}
               b_0 &amp;=    A\left( (A+1) + (A-1)\cos\omega_0 + 2\sqrt{A}\alpha \right) \\
               b_1 &amp;= -2A\Big( (A-1) + (A+1)\cos\omega_0                   \Big) \\
@@ -408,114 +407,114 @@ it's not a custom element.
               a_2 &amp;=        (A+1) - (A-1)\cos\omega_0 - 2\sqrt{A}\alpha
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </dd>
     </dl>
     <p>FYI: The bilinear transform (with compensation for frequency warping)
     substitutes:</p>
     <p class="label">(normalized)</p>
-    <displayed-eqn>     $$
+    <pre>     $$
         s \leftarrow \frac{1}{\tan\displaystyle\frac{\omega_0}{2}} \frac{1-z^{-1}}{1+z^{-1}}
       $$
-</displayed-eqn>
+</pre>
     <p>and makes use of these trig identities:</p>
     <ol>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             \tan\frac{\omega_0}{2} = \frac{\sin\omega_0}{1+\cos\omega_0}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             \left(\tan\frac{\omega_0}{2}\right)^2 = \frac{1-\cos\omega_0}{1+\cos\omega_0}
           $$
-</displayed-eqn>
+</pre>
       </li>
     </ol>
     <p>resulting in these substitutions:</p>
     <ol>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             1 \leftarrow \frac{1+\cos\omega_0}{1+\cos\omega_0}\frac{1+2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             \begin{align*}
               s \leftarrow & \frac{1+\cos\omega_0}{\sin\omega_0}
               \frac{1-z^{-1}}{1+z^{-1}} \\
                 & = \frac{1+\cos\omega_0}{\sin\omega_0} \frac{1-z^{-2}}{1+2z^{-1}+z^{-2}}
             \end{align*}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             s^2 \leftarrow \frac{1+\cos\omega_0}{1-\cos\omega_0} \frac{1-2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
           $$
-</displayed-eqn>
+</pre>
       </li>
     </ol>
     <p>The factor:</p>
-    <displayed-eqn>     $$
+    <pre>     $$
         \frac{1+\cos\omega_0}{1+2z^{-1}+z^{-2}}
       $$
-</displayed-eqn>
+</pre>
     <p>is common to all terms in both numerator and denominator, can be
     factored out, and thus be left out in the substitutions above resulting
     in:</p>
     <ol>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             1 \leftarrow \frac{1+2z^{-1}+z^{-2}}{1+\cos\omega_0}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             s \leftarrow \frac{1-z^{-2}}{\sin\omega_0}
           $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>         $$
+        <pre>         $$
             s^2 \leftarrow \frac{1-2z^{-1}+z^{-2}}{1-\cos\omega_0}
           $$
-</displayed-eqn>
+</pre>
       </li>
     </ol>
     <p>In addition, all terms, numerator and denominator, can be multiplied by
     a common</p>
-    <displayed-eqn>       $$
+    <pre>       $$
           \sin^2\omega_0
         $$
-</displayed-eqn>factor, finally resulting in these substitutions:
+</pre>factor, finally resulting in these substitutions:
     <ol>
       <li>
-        <displayed-eqn>             $$
+        <pre>             $$
                 1 \leftarrow (1 + 2z^{-1} + z^{-2}) (1 - \cos\omega_0)
               $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>             $$
+        <pre>             $$
                 s \leftarrow (1-z^{-2})\sin\omega_0
               $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>             $$
+        <pre>             $$
                 s^2 \leftarrow (1 - 2z^{-1} + z^{-2}) (1 + \cos\omega_0)
               $$
-</displayed-eqn>
+</pre>
       </li>
       <li>
-        <displayed-eqn>             $$
+        <pre>             $$
               1 + s^2 \leftarrow 2\, (1 - 2\cos\omega_0\,z^{-1} + z^{-2})
               $$
-</displayed-eqn>
+</pre>
       </li>
     </ol>
     <p>The biquad coefficient formulae above come out after a little
