@@ -3,4 +3,3 @@ indent-attributes: yes
 wrap: 80
 tidy-mark: no
 literal-attributes: yes
-new-pre-tags: displayed-eqn
