@@ -6,11 +6,14 @@
   <script>
    MathJax = {
      tex: {
+       // Allows automatic numbering
        tags: 'ams'
-     }
+     },
+     // Tell MathJax to look for math in code and pre tags.
+     skipHTMLTags: {'[-]': ['code', 'pre']}
    };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
   <style media="screen">
     body {
