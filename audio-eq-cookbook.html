@@ -457,7 +457,9 @@
     <p class="label">(normalized)</p>
     <pre>
       $$
-        s \leftarrow \frac{1}{\tan\displaystyle\frac{\omega_0}{2}} \frac{1-z^{-1}}{1+z^{-1}}
+        \begin{equation}
+          s \leftarrow \frac{1}{\tan\displaystyle\frac{\omega_0}{2}} \frac{1-z^{-1}}{1+z^{-1}}
+        \end{equation}
       $$
 </pre>
     <p>and makes use of these trig identities:</p>
@@ -465,14 +467,18 @@
       <li>
         <pre>
           $$
-            \tan\frac{\omega_0}{2} = \frac{\sin\omega_0}{1+\cos\omega_0}
+            \begin{equation}
+              \tan\frac{\omega_0}{2} = \frac{\sin\omega_0}{1+\cos\omega_0}
+            \end{equation}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            \left(\tan\frac{\omega_0}{2}\right)^2 = \frac{1-\cos\omega_0}{1+\cos\omega_0}
+            \begin{equation}
+              \left(\tan\frac{\omega_0}{2}\right)^2 = \frac{1-\cos\omega_0}{1+\cos\omega_0}
+            \end{equation}
           $$
 </pre>
       </li>
@@ -482,25 +488,29 @@
       <li>
         <pre>
           $$
-            1 \leftarrow \frac{1+\cos\omega_0}{1+\cos\omega_0}\frac{1+2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
+            \begin{equation}
+              1 \leftarrow \frac{1+\cos\omega_0}{1+\cos\omega_0}\frac{1+2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
+            \end{equation}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            \begin{align*}
+            \begin{align}
               s \leftarrow & \frac{1+\cos\omega_0}{\sin\omega_0}
               \frac{1-z^{-1}}{1+z^{-1}} \\
                 & = \frac{1+\cos\omega_0}{\sin\omega_0} \frac{1-z^{-2}}{1+2z^{-1}+z^{-2}}
-            \end{align*}
+            \end{align}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            s^2 \leftarrow \frac{1+\cos\omega_0}{1-\cos\omega_0} \frac{1-2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
+            \begin{equation}
+              s^2 \leftarrow \frac{1+\cos\omega_0}{1-\cos\omega_0} \frac{1-2z^{-1}+z^{-2}}{1+2z^{-1}+z^{-2}}
+            \end{equation}
           $$
 </pre>
       </li>
@@ -508,7 +518,9 @@
     <p>The factor:</p>
     <pre>
       $$
-        \frac{1+\cos\omega_0}{1+2z^{-1}+z^{-2}}
+        \begin{equation}
+          \frac{1+\cos\omega_0}{1+2z^{-1}+z^{-2}}
+        \end{equation}
       $$
 </pre>
     <p>is common to all terms in both numerator and denominator, can be
@@ -518,21 +530,27 @@
       <li>
         <pre>
           $$
-            1 \leftarrow \frac{1+2z^{-1}+z^{-2}}{1+\cos\omega_0}
+            \begin{equation}
+              1 \leftarrow \frac{1+2z^{-1}+z^{-2}}{1+\cos\omega_0}
+            \end{equation}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            s \leftarrow \frac{1-z^{-2}}{\sin\omega_0}
+            \begin{equation}
+              s \leftarrow \frac{1-z^{-2}}{\sin\omega_0}
+            \end{equation}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            s^2 \leftarrow \frac{1-2z^{-1}+z^{-2}}{1-\cos\omega_0}
+            \begin{equation}
+              s^2 \leftarrow \frac{1-2z^{-1}+z^{-2}}{1-\cos\omega_0}
+            \end{equation}
           $$
 </pre>
       </li>
@@ -548,28 +566,36 @@
       <li>
         <pre>
           $$
-            1 \leftarrow (1 + 2z^{-1} + z^{-2}) (1 - \cos\omega_0)
+            \begin{equation}
+              1 \leftarrow (1 + 2z^{-1} + z^{-2}) (1 - \cos\omega_0)
+            \end{equation}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            s \leftarrow (1-z^{-2})\sin\omega_0
+            \begin{equation}
+              s \leftarrow (1-z^{-2})\sin\omega_0
+            \end{equation}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            s^2 \leftarrow (1 - 2z^{-1} + z^{-2}) (1 + \cos\omega_0)
+            \begin{equation}
+              s^2 \leftarrow (1 - 2z^{-1} + z^{-2}) (1 + \cos\omega_0)
+            \end{equation}
           $$
 </pre>
       </li>
       <li>
         <pre>
           $$
-            1 + s^2 \leftarrow 2\, (1 - 2\cos\omega_0\,z^{-1} + z^{-2})
+            \begin{equation}
+              1 + s^2 \leftarrow 2\, (1 - 2\cos\omega_0\,z^{-1} + z^{-2})
+            \end{equation}
           $$
 </pre>
       </li>
